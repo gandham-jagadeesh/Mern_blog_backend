@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const secretkey = "fed22286b88db770cbe97f76f77edbdb03c01f6a2654c0b4fac41a70574efde9b494dccf882cac83b2b72f5cb87815c82453577fb4f14e6079e3a98d065fca0fbc76ac1a8be7129f7f0b24ddd127b5485a3ff8750816ec2bca60561fa118b1ee"
 const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
-const uploadMiddleware = multer({ dest: 'uploads/' })
+const uploadMiddleware = multer({ dest: 'uploads/'})
 const fs  = require('fs');
 const PostModel = require("./models/post");
 
@@ -27,7 +27,7 @@ app.post("/register",async (req,res)=>{
     const {username,password} = req.body;
     try{
    const hash = bcrypt.hashSync(password, salt);
-   const userdoc = await  userModel.create({username,password:hash});
+   const userdoc = await  userModel.create({username:username,password:hash});
    res.json({userdoc});
 }
     catch(e){
@@ -35,7 +35,6 @@ app.post("/register",async (req,res)=>{
         res.status(400).json(e);
     }
 })
-
 
 
 app.post("/login",async(req,res)=>{
@@ -57,7 +56,7 @@ app.post("/login",async(req,res)=>{
 else{
     res.status(400).json('wrong credentails');
 }
- }
+     }
  else{
     res.status(400).json('username not found in the databases');
  }
@@ -67,12 +66,16 @@ else{
 
 app.get("/profile",(req,res)=>{
     const {token} = req.cookies;
+    if(token){
     jwt.verify(token,secretkey,{},(err,info)=>{
         if(err){
             throw err;
         }
         res.json(info);
-    })
+    })}
+    else{
+        res.json('no token formed');
+    }
 
 })
 
@@ -108,11 +111,46 @@ app.post("/post",uploadMiddleware.single('file'),async  (req,res)=>{
 
 
 app.get("/posts",async (req,res)=>{
-
 const postsDoc = await PostModel.find().populate('author',['username']).sort({createdAt:-1}).limit(20);
 res.json(postsDoc);
 
 })
+app.get('/posts/:id', async (req, res) => {
+    const {id} = req.params;
+    const postDoc = await PostModel.findById(id).populate('author', ['username']);
+    res.json(postDoc);
+  })
+
+  app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
+    let newPath = null;
+    if (req.file) {
+      const {originalname,path} = req.file;
+      const parts = originalname.split('.');
+      const ext = parts[parts.length - 1];
+      newPath = path+'.'+ext;
+      fs.renameSync(path, newPath);
+    }
+  
+    const {token} = req.cookies;
+    jwt.verify(token, secretkey, {}, async (err,info) => {
+      if (err) throw err;
+      const {id,title,summary,content} = req.body;
+      const postDoc = await PostModel.findById(id);
+      const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+      if (!isAuthor) {
+        return res.status(400).json('you are not the author');
+      }
+      await postDoc.update({
+        title,
+        summary,
+        content,
+        cover: newPath ? newPath : postDoc.cover,
+      });
+  
+      res.json(postDoc);
+    });
+  
+  });
 
 
 
