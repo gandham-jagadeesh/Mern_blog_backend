@@ -157,3 +157,5 @@ app.get('/posts/:id', async (req, res) => {
 app.listen(port,()=>{
     console.log("started listening at 4000");
 })
+
+module.exports = app;
