@@ -7,19 +7,19 @@ const userModel= require("./models/model")
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
-const secretkey = "fed22286b88db770cbe97f76f77edbdb03c01f6a2654c0b4fac41a70574efde9b494dccf882cac83b2b72f5cb87815c82453577fb4f14e6079e3a98d065fca0fbc76ac1a8be7129f7f0b24ddd127b5485a3ff8750816ec2bca60561fa118b1ee"
+const secretkey = String(process.env.secret_key);
 const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/'})
 const fs  = require('fs');
 const PostModel = require("./models/post");
-
+const dotenv    = require("dotenv").config();
 app.use(cors({credentials:true,origin:"http://localhost:3000"}))
 app.use(express.json())
 app.use(cookieParser());
 app.use("/uploads",express.static(__dirname+'/uploads'));
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://gandhamjagadeesh:pHRagJlC3LpHstEH@blogposts.18qnsix.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect(process.env.mongo);
 
 
 
@@ -31,7 +31,6 @@ app.post("/register",async (req,res)=>{
    res.json({userdoc});
 }
     catch(e){
-        console.log(e);
         res.status(400).json(e);
     }
 })
