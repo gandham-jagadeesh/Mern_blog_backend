@@ -22,10 +22,6 @@ mongoose.set('strictQuery', false);
 mongoose.connect(process.env.mongo);
 
 
-app.get("/",async (req,res)=>{
-    res.json("hello world");
-})
-
 
 app.post("/register",async (req,res)=>{
     const {username,password} = req.body;
