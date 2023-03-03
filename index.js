@@ -24,6 +24,13 @@ mongoose.connect(process.env.mongo);
 
 
 app.post("/register",async (req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     const {username,password} = req.body;
     try{
    const hash = bcrypt.hashSync(password, salt);
@@ -37,6 +44,13 @@ app.post("/register",async (req,res)=>{
 
 
 app.post("/login",async(req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
  const {username,password} = req.body;
  const userDoc = await userModel.findOne({username});
  if(userDoc !== null){
@@ -64,6 +78,13 @@ else{
 })
 
 app.get("/profile",(req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     const {token} = req.cookies;
     if(token){
     jwt.verify(token,secretkey,{},(err,info)=>{
@@ -79,11 +100,25 @@ app.get("/profile",(req,res)=>{
 })
 
 app.post("/logout",(req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     res.cookie('token','').json("ok");
 })
 
 
 app.post("/post",uploadMiddleware.single('file'),async  (req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
  const {originalname,path} = req.file;
  const parts  = originalname.split(".");
  const ext    = parts[parts.length-1];
@@ -110,17 +145,38 @@ app.post("/post",uploadMiddleware.single('file'),async  (req,res)=>{
 
 
 app.get("/posts",async (req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
 const postsDoc = await PostModel.find().populate('author',['username']).sort({createdAt:-1}).limit(20);
 res.json(postsDoc);
 
 })
 app.get('/posts/:id', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     const {id} = req.params;
     const postDoc = await PostModel.findById(id).populate('author', ['username']);
     res.json(postDoc);
   })
 
   app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     let newPath = null;
     if (req.file) {
       const {originalname,path} = req.file;
