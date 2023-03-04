@@ -1,11 +1,13 @@
 const express = require("express");
 const cors    = require("cors");
 const app     = express()
+const port    = process.env.port;
 const mongoose = require("mongoose");
 const userModel= require("./models/model")
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
+const secretkey = String(process.env.secret_key);
 const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/'})
@@ -14,7 +16,7 @@ const PostModel = require("./models/post");
 const dotenv    = require("dotenv").config();
 const port    = process.env.port
 const secretkey =String(process.env.secret_key);
-app.use(cors({credentials:true,origin:'https://mern-blog-frontend-orcin.vercel.app/'}))
+app.use(cors({credentials:true,origin:"http://localhost:3000"}))
 app.use(express.json())
 app.use(cookieParser());
 app.use("/uploads",express.static(__dirname+'/uploads'));
