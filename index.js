@@ -14,7 +14,7 @@ const PostModel = require("./models/post");
 const dotenv    = require("dotenv").config();
 const port    = process.env.port
 const secretkey =String(process.env.secret_key);
-app.use(cors({credentials:true,origin:'*'}))
+app.use(cors({credentials:true,origin:'https://mern-blog-frontend-orcin.vercel.app/'}))
 app.use(express.json())
 app.use(cookieParser());
 app.use("/uploads",express.static(__dirname+'/uploads'));
