@@ -7,6 +7,8 @@ const secretkey =String(process.env.secret_key);
 
 
 router.post("/",async  (req,res)=>{
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
 
     const {originalname,path} = req.file;
     const parts  = originalname.split(".");
@@ -34,6 +36,8 @@ router.post("/",async  (req,res)=>{
 
 
 router.get("/:id", async (req, res) => {
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
     const {id} = req.params;
     const postDoc = await PostModel.findById(id).populate('author', ['username']);
     console.log(postDoc);
@@ -42,6 +46,8 @@ router.get("/:id", async (req, res) => {
 
 
   router.get('/', async (req,res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.json(
       await PostModel.find()
         .populate('author', ['username'])
@@ -56,7 +62,8 @@ router.get("/:id", async (req, res) => {
 
 
 router.put("/",async (req,res) => {
-
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
     let newPath = null;
     if (req.file) {
       const {originalname,path} = req.file;

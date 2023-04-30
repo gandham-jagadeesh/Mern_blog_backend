@@ -5,7 +5,8 @@ const router  = express.Router();
 const userModel= require("../models/model");
 
 router.post("/",async (req,res)=>{
-
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     const {username,password} = req.body;
     try{
    const hash = bcrypt.hashSync(password, salt);
