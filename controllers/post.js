@@ -8,7 +8,7 @@ const secretkey =String(process.env.secret_key);
 
 router.post("/",async  (req,res)=>{
   res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
 
     const {originalname,path} = req.file;
     const parts  = originalname.split(".");
@@ -37,8 +37,8 @@ router.post("/",async  (req,res)=>{
 
 router.get("/:id", async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-    const {id} = req.params;
+  res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
+  const {id} = req.params;
     const postDoc = await PostModel.findById(id).populate('author', ['username']);
     console.log(postDoc);
     res.json(postDoc);
@@ -47,7 +47,8 @@ router.get("/:id", async (req, res) => {
 
   router.get('/', async (req,res) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
+
     res.json(
       await PostModel.find()
         .populate('author', ['username'])
@@ -63,7 +64,8 @@ router.get("/:id", async (req, res) => {
 
 router.put("/",async (req,res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
+
     let newPath = null;
     if (req.file) {
       const {originalname,path} = req.file;

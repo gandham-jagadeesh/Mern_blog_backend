@@ -6,7 +6,8 @@ const userModel= require("../models/model");
 
 router.post("/",async (req,res)=>{
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
+
     const {username,password} = req.body;
     try{
    const hash = bcrypt.hashSync(password, salt);

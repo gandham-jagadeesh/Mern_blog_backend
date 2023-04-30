@@ -7,6 +7,8 @@ const secretkey =String(process.env.secret_key);
 
 router.post("/",async(req,res)=>{
     res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
+
     const {username,password} = req.body;
     const userDoc = await userModel.findOne({username});
     if(userDoc !== null){
