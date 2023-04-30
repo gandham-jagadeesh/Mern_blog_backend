@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors    = require("cors");
 const app     = express()
@@ -5,8 +6,7 @@ const mongoose = require("mongoose");
 const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/'})
-const dotenv    = require("dotenv").config();
-const port    = process.env.port;
+const port    = process.env.PORT;
 
 app.use("/uploads",express.static(__dirname+'/uploads'));
 app.use(cors());
@@ -17,8 +17,9 @@ mongoose.set('strictQuery', false);
 mongoose.connect(process.env.mongo);
 
 app.get("/",(req,res)=>{
-    res.json("hello world");
+    res.send("hello world");
 })
+
 
 app.use("/register",require("./controllers/register"));
 app.use("/login",require("./controllers/login"));
