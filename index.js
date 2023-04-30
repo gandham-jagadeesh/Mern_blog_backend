@@ -6,7 +6,7 @@ const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/'})
 const dotenv    = require("dotenv").config();
-const port    = process.env.port
+const port    = process.env.port;
 
 app.use("/uploads",express.static(__dirname+'/uploads'));
 app.use(cors({credentials:true,origin:"https://mern-blog-frontend-seven.vercel.app/"}));
@@ -25,7 +25,8 @@ app.use("/logout",require("./controllers/logout"));
 app.use("/post",uploadMiddleware.single('file'),require("./controllers/post"));
 
 app.listen(port,()=>{
-    console.log("started listening at 4000");
+    console.log(`${port}`);
 })
 
 module.exports = app;
+
