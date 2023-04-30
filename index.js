@@ -1,13 +1,11 @@
 const express = require("express");
 const cors    = require("cors");
 const app     = express()
-const port    = process.env.port;
 const mongoose = require("mongoose");
 const userModel= require("./models/model")
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
-const secretkey = String(process.env.secret_key);
 const cookieParser   = require('cookie-parser');
 const multer  = require('multer')
 const uploadMiddleware = multer({ dest: 'uploads/'})
