@@ -9,16 +9,12 @@ const uploadMiddleware = multer({ dest: 'uploads/'})
 const port    = process.env.PORT;
 
 app.use("/uploads",express.static(__dirname+'/uploads'));
-app.use(cors());
+app.use(cors({credentials:true,origin:'https://mern-blog-frontend-seven.vercel.app/'}));
 app.use(express.json())
 app.use(cookieParser());
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.mongo);
-
-app.get("/",(req,res)=>{
-    res.send("hello world");
-})
 
 
 app.use("/register",require("./controllers/register"));
