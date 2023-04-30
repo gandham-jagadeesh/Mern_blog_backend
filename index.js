@@ -16,13 +16,15 @@ app.use(cookieParser());
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.mongo);
 
+app.get("/",(req,res)=>{
+    res.json("hello world");
+})
 
-
-app.use("https://mernblogbackend-production.up.railway.app/register",require("./controllers/register"));
-app.use("https://mernblogbackend-production.up.railway.app/login",require("./controllers/login"));
-app.use("https://mernblogbackend-production.up.railway.app/profile",require("./controllers/profile"));
-app.use("https://mernblogbackend-production.up.railway.app/logout",require("./controllers/logout"));
-app.use("https://mernblogbackend-production.up.railway.app/post",uploadMiddleware.single('file'),require("./controllers/post"));
+app.use("/register",require("./controllers/register"));
+app.use("/login",require("./controllers/login"));
+app.use("/profile",require("./controllers/profile"));
+app.use("/logout",require("./controllers/logout"));
+app.use("/post",uploadMiddleware.single('file'),require("./controllers/post"));
 
 app.listen(port,()=>{
     console.log(`${port}`);
