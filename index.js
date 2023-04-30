@@ -9,7 +9,7 @@ const dotenv    = require("dotenv").config();
 const port    = process.env.port
 
 app.use("/uploads",express.static(__dirname+'/uploads'));
-app.use(cors({credentials:true,origin:"http://localhost:3000"}))
+app.use(cors({credentials:true,origin:"https://mern-blog-frontend-seven.vercel.app/"}));
 app.use(express.json())
 app.use(cookieParser());
 
