@@ -7,7 +7,6 @@ const secretkey =String(process.env.secret_key);
 
 router.post("/",async(req,res)=>{
     res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
     const {username,password} = req.body;
     const userDoc = await userModel.findOne({username});
     if(userDoc !== null){
