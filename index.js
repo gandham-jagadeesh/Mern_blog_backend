@@ -27,6 +27,3 @@ app.use("/post",uploadMiddleware.single('file'),require("./controllers/post"));
 app.listen(port,()=>{
     console.log(`${port}`);
 })
-
-module.exports = app;
-
