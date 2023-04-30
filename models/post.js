@@ -7,7 +7,7 @@ title:String,
 summary:String,
 content:String,
 cover:String,
-author:{type:Schema.Types.ObjectId,ref:'user'}
+author:{type:Schema.Types.ObjectId,ref:'registers'}
 },
  {
     timestamps:true
