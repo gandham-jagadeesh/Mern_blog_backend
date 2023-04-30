@@ -16,6 +16,11 @@ app.use(cookieParser());
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.mongo);
 
+app.get("/",(req,res)=>{
+    res.send("hello world");
+})
+
+
 app.use("/register",require("./controllers/register"));
 app.use("/login",require("./controllers/login"));
 app.use("/profile",require("./controllers/profile"));
