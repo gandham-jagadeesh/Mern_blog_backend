@@ -46,8 +46,6 @@ router.get("/:id", async (req, res) => {
 
 
   router.get('/', async (req,res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', 'https://mern-blog-frontend-seven.vercel.app/');
 
     res.json(
       await PostModel.find()
